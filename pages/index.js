@@ -1,35 +1,7 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import React from 'react';
+import { useRouter } from 'next/router';
 import appConfig from '../config.json';
-
-function GlobalStyle() {
-  return (
-    <style global jsx>{`
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: 'Open Sans', sans-serif;
-      }
-      /* App fit Height */ 
-      html, body, #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */ 
-    `}</style>
-  );
-}
 
 function Title(props) {
   console.log(props.children);
@@ -65,10 +37,12 @@ function Title(props) {
 export default function PaginaInicial() {
   // const username = 'celsoae';
   const [username, setUsername] = React.useState('');
+  //const [colorValue, setColor] = React.useState('100');
+  const roteamento = useRouter();
 
   return (
     <>
-      <GlobalStyle />
+      
       <Box
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -95,13 +69,21 @@ export default function PaginaInicial() {
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={function (infosDoEvento) {
+              infosDoEvento.preventDefault(); //previne o comprtamento padrao do form, que é ir para uma url, e se nao tiver nada carrega dnv ele mesmo
+              console.log('alguem submeteu o form');
+              roteamento.push('/chat');
+              //window.location.href = '/chat'; //jeito tradicional do navegador trocar de pagina
+              //Modo do React:
+
+            }}
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
             }}
           >
             <Title>Bem vindo!</Title>
-            <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
+            <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[100] }}>
               {appConfig.name}
             </Text>
 
@@ -116,6 +98,7 @@ export default function PaginaInicial() {
                   setUsername(valor);
                 }}  
             /> */}
+
             <TextField
               value={username}
               onChange={function trocarChar(event){
@@ -133,6 +116,7 @@ export default function PaginaInicial() {
               }}
             />
             <Button
+              
               type='submit'
               label='Entrar'
               fullWidth
