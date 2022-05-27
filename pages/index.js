@@ -1,4 +1,5 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+import React from 'react';
 import appConfig from '../config.json';
 
 function GlobalStyle() {
@@ -62,7 +63,8 @@ function Title(props) {
 
 
 export default function PaginaInicial() {
-  const username = 'zatara';
+  // const username = 'celsoae';
+  const [username, setUsername] = React.useState('');
 
   return (
     <>
@@ -103,7 +105,23 @@ export default function PaginaInicial() {
               {appConfig.name}
             </Text>
 
+            {/* <input //caixa de login
+                type="text"
+                value={username}  
+                onChange={function (event){
+                  console.log('User digitou', event.target.value) //teste pro react saber que foi digitado algo
+                  //Onde ta o valor?
+                  const valor = event.target.value;
+                  //trocar o valor da variavel atraves do React e avisa a quem precisa
+                  setUsername(valor);
+                }}  
+            /> */}
             <TextField
+              value={username}
+              onChange={function trocarChar(event){
+                const value = event.target.value;
+                setUsername(value);
+              }}
               fullWidth
               textFieldColors={{
                 neutral: {
